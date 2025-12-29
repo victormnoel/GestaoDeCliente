@@ -14,9 +14,7 @@ namespace GestaoDeCliente.infrastructure.Contexto
         // Representacao do BD
         private static List<Cliente> clientesBd = 
         [
-            Cliente.Criar(1, "Empresa A", "41234567890122"),
-            Cliente.Criar(2, "Empresa B", "12345678901234"),
-            Cliente.Criar(3, "Empresa C", "98765432109876")
+            Cliente.Criar("Empresa A", "41234567890122"),
         ];
 
         // Representacao da interface de Manipulacao do BD

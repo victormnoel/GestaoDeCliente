@@ -4,6 +4,7 @@ using GestaoDeCliente.infrastructure.Contexto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,8 +38,19 @@ namespace GestaoDeCliente.infrastructure.Repositorios
 
         public Task<bool> CadastrarCliente(Cliente novoCliente)
         {
+            int proximoId = _contexto.Clientes.Any() 
+                ? _contexto.Clientes.Max(c => c.ClienteId) + 1 
+                : 1;
+            
+            DefinirClienteId(novoCliente, proximoId);
             _contexto.Clientes.Add(novoCliente);
             return Task.FromResult(true);
+        }
+
+        private static void DefinirClienteId(Cliente cliente, int clienteId)
+        {
+            var propriedade = typeof(Cliente).GetProperty("ClienteId", BindingFlags.Public | BindingFlags.Instance);
+            propriedade?.SetValue(cliente, clienteId);
         }
         #endregion
     }
