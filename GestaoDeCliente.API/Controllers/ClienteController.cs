@@ -28,7 +28,6 @@ namespace GestaoDeCliente.API.Controllers
 
         #region Endpoints
 
-        // Registrar log (opcional)
 
         [HttpGet("Buscar/{id}")]
         public async Task<IActionResult> BuscarCliente(int id)
@@ -37,7 +36,7 @@ namespace GestaoDeCliente.API.Controllers
             {
                 ClienteViewModel? clienteEncontrado = await _mediator.Send(new BuscarClientePorIdQuery() { ClienteId = id });
                 return clienteEncontrado is null
-                    ? NotFound("Não foi possível encontrar o cliente refereciado!")
+                    ? NotFound("Não foi possível encontrar o cliente referenciado!")
                     : Ok(clienteEncontrado);
             }
             catch (Exception excecao)
