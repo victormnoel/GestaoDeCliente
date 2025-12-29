@@ -1,6 +1,7 @@
 ﻿using GestaoDeCliente.Application.Commands.Criar;
 using GestaoDeCliente.Application.Modelos.ViewModels;
 using GestaoDeCliente.Application.Queries.Buscar;
+using GestaoDeCliente.Core.Excecoes;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,14 @@ namespace GestaoDeCliente.API.Controllers
                 return retornoDoCadastro.Sucesso 
                     ? Ok(retornoDoCadastro.Mensagem) 
                     : BadRequest(retornoDoCadastro.Mensagem);
+            }
+            catch (NomeFantasiaInvalidoException excecao)
+            {
+                return BadRequest(excecao.Message);
+            }
+            catch (CnpjInvalidoException excecao)
+            {
+                return BadRequest(excecao.Message);
             }
             catch (Exception excecao)
             {
