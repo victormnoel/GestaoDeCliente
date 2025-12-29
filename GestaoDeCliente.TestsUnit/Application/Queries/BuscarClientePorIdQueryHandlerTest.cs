@@ -42,7 +42,6 @@ namespace GestaoDeCliente.TestsUnit.Application.Queries
         {
             int clienteIdInformado = 1;
             Cliente clientePesquisado = Cliente.Criar(
-                clienteIdInformado,
                 _faker.Company.CompanyName(),
                 _faker.Company.Cnpj());
             BuscarClientePorIdQuery query = new BuscarClientePorIdQuery() { ClienteId = clienteIdInformado };
@@ -55,11 +54,6 @@ namespace GestaoDeCliente.TestsUnit.Application.Queries
         public async Task SendoInformadoOIdDeUmClienteInexistente_QuandoABuscaForRealizada_OClienteDeveSerRetornadoNulo()
         {
             int clienteIdInformado = 001;
-            Cliente clientePesquisado = Cliente.Criar(
-               clienteIdInformado,
-               _faker.Company.CompanyName(),
-               _faker.Company.Cnpj());
-
             A.CallTo(() => _clienteRepositorioMock.BuscarClientePorId(clienteIdInformado)).Returns<Cliente?>(null);
             BuscarClientePorIdQuery query = new BuscarClientePorIdQuery() { ClienteId = clienteIdInformado };
             ClienteViewModel? clienteRetornado = await _queryHandler.Handle(query, CancellationToken.None);
@@ -73,14 +67,12 @@ namespace GestaoDeCliente.TestsUnit.Application.Queries
             string nomeFantasiaEsperado = _faker.Company.CompanyName();
             string cnpjEsperado = _faker.Company.Cnpj();
             Cliente clientePesquisado = Cliente.Criar(
-                clienteIdInformado,
                 nomeFantasiaEsperado,
                 cnpjEsperado);
             BuscarClientePorIdQuery query = new BuscarClientePorIdQuery() { ClienteId = clienteIdInformado };
             A.CallTo(() => _clienteRepositorioMock.BuscarClientePorId(query.ClienteId)).Returns(clientePesquisado);
             ClienteViewModel? clienteRetornado = await _queryHandler.Handle(query, CancellationToken.None);
             Assert.NotNull(clienteRetornado);
-            Assert.Equal(clienteIdInformado, clienteRetornado.ClienteId);
             Assert.Equal(nomeFantasiaEsperado, clienteRetornado.NomeFantasia);
             Assert.Equal(clientePesquisado.Cnpj.NumeroFormatado, clienteRetornado.cnpj);
         }
