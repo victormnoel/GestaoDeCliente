@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestaoDeCliente.Core.Excecoes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
