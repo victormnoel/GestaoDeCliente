@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GestaoDeCliente.Application\GestaoDeCliente.Application.csproj" />
+    <ProjectReference Include="..\GestaoDeCliente.IOC\GestaoDeCliente.IOC.csproj" />
   </ItemGroup>
 
 </Project>
