@@ -33,7 +33,7 @@ namespace GestaoDeCliente.Core.ValuesObjects
         {
             string cnpjFormatado = LimparFormatacao(cnpj);
             if (!ValidarCNPJ(cnpjFormatado))
-                throw new ArgumentException("O Cnpj informado não é valido!");
+                throw new CnpjInvalidoException("O Cnpj informado não é valido!");
 
             return new CNPJ(cnpjFormatado);
         }

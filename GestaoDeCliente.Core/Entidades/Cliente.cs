@@ -44,7 +44,7 @@ namespace GestaoDeCliente.Core.Entidades
         public void AtualizarInformacoes(Cliente clienteAtualizado)
         {
             if (clienteAtualizado == null)
-                throw new ArgumentException("Não foi possivel validar os dados do cliente!");
+                throw new ClienteNaoIdentificadoException("Não foi possivel validar os dados do cliente para atualização!");
 
             ValidarNomeFantasia(clienteAtualizado.NomeFantasia);
             AtualizarNomeFantasia(clienteAtualizado.NomeFantasia);
@@ -54,14 +54,14 @@ namespace GestaoDeCliente.Core.Entidades
         public void InativarCliente()
         {
             if (Status == StatusPadrao.Inativo)
-                throw new ArgumentException("O cliente já esta inativado!");
+                throw new TrocaDeStatusInvalidaException("O cliente já esta inativado!");
             Status = StatusPadrao.Inativo;
         }
 
         public void AtivarCliente()
         {
             if(Status == StatusPadrao.Ativo)
-                throw new ArgumentException("O cliente já esta ativado!");
+                throw new TrocaDeStatusInvalidaException("O cliente já esta ativado!");
             Status = StatusPadrao.Ativo;
         }
 
@@ -89,7 +89,7 @@ namespace GestaoDeCliente.Core.Entidades
             };
 
             if(!retornoDaValidacao)
-                throw new ArgumentException("O nome fantasia informado não é valido!");
+                throw new NomeFantasiaInvalidoException("O nome fantasia informado não é valido!");
         }
 
         // verificar se já existe um cliente com o CNPJ informado

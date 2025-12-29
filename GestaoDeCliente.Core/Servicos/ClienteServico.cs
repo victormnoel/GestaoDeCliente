@@ -1,4 +1,5 @@
 ﻿using GestaoDeCliente.Core.Entidades;
+using GestaoDeCliente.Core.Excecoes;
 using GestaoDeCliente.Core.Repositorios;
 using GestaoDeCliente.Core.ValuesObjects;
 using System;
@@ -36,7 +37,7 @@ namespace GestaoDeCliente.Core.Servicos
             string cnpjSemFomatacao = Regex.Replace(cnpj, @"[^\d]", "");
 
             if (string.IsNullOrWhiteSpace(cnpjSemFomatacao))
-                throw new ArgumentException("O Cnpj informado não é valido!");
+                throw new CnpjInvalidoException("O Cnpj informado não é valido!");
 
             Cliente? clienteComMesmoCnpj = await _clienteRepositorio.BuscarClientePorCnpj(cnpjSemFomatacao);
             return clienteComMesmoCnpj is null ? false : true;
