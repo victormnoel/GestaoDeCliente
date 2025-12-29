@@ -38,8 +38,8 @@ namespace GestaoDeCliente.Core.Servicos
             if (string.IsNullOrWhiteSpace(cnpjSemFomatacao))
                 throw new ArgumentException("O Cnpj informado não é valido!");
 
-            Cliente clienteComMesmoCnpj = await _clienteRepositorio.BuscarClientePorCnpj(cnpjSemFomatacao);
-            return clienteComMesmoCnpj is null ? true : false;
+            Cliente? clienteComMesmoCnpj = await _clienteRepositorio.BuscarClientePorCnpj(cnpjSemFomatacao);
+            return clienteComMesmoCnpj is null ? false : true;
         }
 
         #endregion
