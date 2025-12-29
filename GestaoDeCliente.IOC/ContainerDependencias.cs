@@ -34,11 +34,6 @@ namespace GestaoDeCliente.IOC
 
             #endregion
 
-            #region Fluent Validation
-
-
-            #endregion
-
             return servicos;
         }
     }
