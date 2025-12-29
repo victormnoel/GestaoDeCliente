@@ -1,4 +1,5 @@
 ﻿using GestaoDeCliente.Core.Enums;
+using GestaoDeCliente.Core.Excecoes;
 using GestaoDeCliente.Core.ValuesObjects;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,8 @@ namespace GestaoDeCliente.Core.Entidades
 
         #region Construtor
 
-        private Cliente(int clienteId, string nomeFantasia, CNPJ cnpj, StatusPadrao status)
+        private Cliente(string nomeFantasia, CNPJ cnpj, StatusPadrao status)
         {
-            ClienteId = clienteId;
             NomeFantasia = nomeFantasia;
             Cnpj = cnpj;
             Status = status;
@@ -34,11 +34,11 @@ namespace GestaoDeCliente.Core.Entidades
 
         #region Regras de Negocio
 
-        public static Cliente Criar(int clientId, string nomeFantasia, string cnpj)
+        public static Cliente Criar(string nomeFantasia, string cnpj)
         {
             ValidarNomeFantasia(nomeFantasia);
             CNPJ cnpjInformado = CNPJ.Criar(cnpj);
-            return new Cliente(clientId, nomeFantasia, cnpjInformado, StatusPadrao.Ativo);
+            return new Cliente(nomeFantasia, cnpjInformado, StatusPadrao.Ativo);
         }
 
         public void AtualizarInformacoes(Cliente clienteAtualizado)
@@ -91,9 +91,6 @@ namespace GestaoDeCliente.Core.Entidades
             if(!retornoDaValidacao)
                 throw new NomeFantasiaInvalidoException("O nome fantasia informado não é valido!");
         }
-
-        // verificar se já existe um cliente com o CNPJ informado
-
 
         #endregion
 
