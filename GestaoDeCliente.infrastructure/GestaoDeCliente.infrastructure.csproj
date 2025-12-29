@@ -8,8 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Configuracoes\" />
-    <Folder Include="Contexto\" />
-    <Folder Include="Repositorios\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GestaoDeCliente.Core\GestaoDeCliente.Core.csproj" />
   </ItemGroup>
 
 </Project>

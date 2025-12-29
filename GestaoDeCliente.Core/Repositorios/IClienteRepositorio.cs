@@ -9,8 +9,8 @@ namespace GestaoDeCliente.Core.Repositorios
 {
     public interface IClienteRepositorio
     {
-        Task<Cliente> BuscarClientePorCnpj(string cnpj);
-        Task<bool> CadastrarClient(Cliente novoCliente);
-        Task<Cliente> BuscarCliente(int clientId);
+        Task<Cliente?> BuscarClientePorCnpj(string cnpj);
+        Task<bool> CadastrarCliente(Cliente novoCliente);
+        Task<Cliente?> BuscarClientePorId(int clientId);
     }
 }
