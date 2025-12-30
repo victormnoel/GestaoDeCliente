@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CriarClienteCommand).Assembly));
-builder.Services.AdicionarServicos();
+builder.Services.AdicionarServicos(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
