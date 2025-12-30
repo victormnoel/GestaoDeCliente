@@ -1,6 +1,6 @@
 ﻿using GestaoDeCliente.Core.Repositorios;
 using GestaoDeCliente.Core.Servicos;
-using GestaoDeCliente.infrastructure.Contexto;
+using GestaoDeCliente.infrastructure.Configuracoes.NHibernate;
 using GestaoDeCliente.infrastructure.Repositorios;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -32,8 +32,6 @@ namespace GestaoDeCliente.IOC
             #region Servico de Dominio
 
             servicos.AddScoped<IClienteServico, ClienteServico>();
-            servicos.AddScoped<GestaoDeClienteContexto>();
-
             #endregion
 
             return servicos;
