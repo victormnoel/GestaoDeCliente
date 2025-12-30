@@ -1,12 +1,5 @@
 ﻿using GestaoDeCliente.Core.Excecoes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace GestaoDeCliente.Core.ValuesObjects
 {
@@ -14,12 +7,14 @@ namespace GestaoDeCliente.Core.ValuesObjects
     {
         #region Propriedades
 
-        public string Numero { get; }
+        public virtual string Numero { get; protected set; }
         public string NumeroFormatado => $"{Numero.Substring(0, 2)}.{Numero.Substring(2, 3)}.{Numero.Substring(5, 3)}/{Numero.Substring(8, 4)}-{Numero.Substring(12, 2)}";
 
         #endregion
 
         #region Construtor
+
+        protected CNPJ() { } // Construtor quere sera utilizado pelo NHibernate
 
         private CNPJ(string cnpj)
         {
@@ -28,7 +23,7 @@ namespace GestaoDeCliente.Core.ValuesObjects
 
         #endregion
 
-        #region Regras de negocio
+        #region Regras de negocio (Estruturais)
 
         public static CNPJ Criar(string cnpj)
         {
@@ -38,8 +33,6 @@ namespace GestaoDeCliente.Core.ValuesObjects
 
             return new CNPJ(cnpjFormatado);
         }
-
-        #endregion
 
         #region Invariantes de negocio
         private static string LimparFormatacao(string cnpj) => Regex.Replace(cnpj, @"[^\d]", "");
@@ -56,5 +49,8 @@ namespace GestaoDeCliente.Core.ValuesObjects
         }
 
         #endregion
+
+        #endregion
+
     }
 }

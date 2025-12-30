@@ -1,13 +1,6 @@
 ﻿using GestaoDeCliente.Core.Enums;
 using GestaoDeCliente.Core.Excecoes;
 using GestaoDeCliente.Core.ValuesObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoDeCliente.Core.Entidades
 {
@@ -15,14 +8,16 @@ namespace GestaoDeCliente.Core.Entidades
     {
         #region Propriedades
 
-        public int ClienteId { get; private set; }
-        public string NomeFantasia { get; private set; }
-        public CNPJ Cnpj { get; private set; }
-        public StatusPadrao Status { get; private set; }
+        public virtual int ClienteId { get; protected set; }
+        public virtual string NomeFantasia { get; protected set; }
+        public virtual CNPJ Cnpj { get; protected set; }
+        public virtual StatusPadrao Status { get; protected set; }
 
         #endregion
 
         #region Construtor
+
+        protected Cliente() { } // Construtor para ser utilizado pelo NHibernate
 
         private Cliente(string nomeFantasia, CNPJ cnpj, StatusPadrao status)
         {
@@ -41,7 +36,7 @@ namespace GestaoDeCliente.Core.Entidades
             return new Cliente(nomeFantasia, cnpjInformado, StatusPadrao.Ativo);
         }
 
-        public void AtualizarInformacoes(Cliente clienteAtualizado)
+        public virtual void AtualizarInformacoes(Cliente clienteAtualizado)
         {
             if (clienteAtualizado == null)
                 throw new ClienteNaoIdentificadoException("Não foi possivel validar os dados do cliente para atualização!");
@@ -51,27 +46,27 @@ namespace GestaoDeCliente.Core.Entidades
             AtualizarCNPJ(clienteAtualizado.Cnpj.Numero);
         }
 
-        public void InativarCliente()
+        public virtual void InativarCliente()
         {
             if (Status == StatusPadrao.Inativo)
                 throw new TrocaDeStatusInvalidaException("O cliente já esta inativado!");
             Status = StatusPadrao.Inativo;
         }
 
-        public void AtivarCliente()
+        public virtual void AtivarCliente()
         {
             if(Status == StatusPadrao.Ativo)
                 throw new TrocaDeStatusInvalidaException("O cliente já esta ativado!");
             Status = StatusPadrao.Ativo;
         }
 
-        public void AtualizarNomeFantasia(string nomeFantasia)
+        public virtual void AtualizarNomeFantasia(string nomeFantasia)
         {
             ValidarNomeFantasia(nomeFantasia);
             NomeFantasia = nomeFantasia.Trim();
         }
 
-        public void AtualizarCNPJ(string cnpj)
+        public virtual void AtualizarCNPJ(string cnpj)
         {
             Cnpj = CNPJ.Criar(cnpj);
         }
