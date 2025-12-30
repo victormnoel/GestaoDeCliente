@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoDeCliente.TestsUnit",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoDeCliente.Core", "GestaoDeCliente.Core\GestaoDeCliente.Core.csproj", "{0099BBE8-B7E1-41DB-A221-206D76890872}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoDeCliente.IOC", "GestaoDeCliente.IOC\GestaoDeCliente.IOC.csproj", "{49B54BD5-6381-4085-ABDA-97BF01D262C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
