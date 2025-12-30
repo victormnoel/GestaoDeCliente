@@ -14,10 +14,12 @@ namespace GestaoDeCliente.IOC
 {
     public static class ContainerDependencias
     {
-
-        public static IServiceCollection AdicionarServicos(this IServiceCollection servicos)
+        public static IServiceCollection AdicionarServicos(this IServiceCollection servicos, IConfiguration configuracoes)
         {
             #region Conexao com banco de dados
+
+            string stringDeConexao = configuracoes.GetConnectionString("StringDeConexao")!;
+            servicos.AdicionarNHibernate(stringDeConexao);
 
             #endregion
 
