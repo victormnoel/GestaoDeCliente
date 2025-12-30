@@ -3,7 +3,6 @@ using GestaoDeCliente.Application.Modelos.ViewModels;
 using GestaoDeCliente.Application.Queries.Buscar;
 using GestaoDeCliente.Core.Excecoes;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoDeCliente.API.Controllers
