@@ -12,7 +12,6 @@ namespace GestaoDeCliente.Application.Queries.Buscar
         #endregion
 
         #region Construtor
-
         public BuscarClientePorIdQueryHandler(IClienteRepositorio clienteRepositorio)
         {
             _clienteRepositorio = clienteRepositorio;
