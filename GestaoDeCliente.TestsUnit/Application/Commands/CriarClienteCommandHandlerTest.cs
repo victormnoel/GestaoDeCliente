@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using Bogus;
+﻿using Bogus;
 using Bogus.Extensions.Brazil;
 using FakeItEasy;
 using GestaoDeCliente.Application.Commands.Criar;
@@ -8,12 +7,6 @@ using GestaoDeCliente.Core.Entidades;
 using GestaoDeCliente.Core.Excecoes;
 using GestaoDeCliente.Core.Repositorios;
 using GestaoDeCliente.Core.Servicos;
-using GestaoDeCliente.Core.ValuesObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoDeCliente.TestsUnit.Application.Commands
 {
@@ -24,7 +17,6 @@ namespace GestaoDeCliente.TestsUnit.Application.Commands
         private readonly IClienteServico _clienteServicoMock;
         private readonly IClienteRepositorio _clienteRepositorioMock;
         private readonly Faker _faker;
-        private readonly IFixture _fixture;
         private readonly CriarClienteCommandHandler _commandHandler;
 
         #endregion
@@ -35,7 +27,6 @@ namespace GestaoDeCliente.TestsUnit.Application.Commands
             _clienteServicoMock = A.Fake<IClienteServico>();
             _clienteRepositorioMock = A.Fake<IClienteRepositorio>();
             _faker = new Faker();
-            _fixture = new Fixture();
             _commandHandler = new CriarClienteCommandHandler(_clienteRepositorioMock, _clienteServicoMock);
         }
         #endregion

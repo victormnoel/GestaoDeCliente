@@ -1,16 +1,10 @@
-﻿using AutoFixture;
-using Bogus;
+﻿using Bogus;
 using Bogus.Extensions.Brazil;
 using FakeItEasy;
 using GestaoDeCliente.Application.Modelos.ViewModels;
 using GestaoDeCliente.Application.Queries.Buscar;
 using GestaoDeCliente.Core.Entidades;
 using GestaoDeCliente.Core.Repositorios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestaoDeCliente.TestsUnit.Application.Queries
 {
@@ -20,7 +14,6 @@ namespace GestaoDeCliente.TestsUnit.Application.Queries
 
         private readonly IClienteRepositorio _clienteRepositorioMock;
         private readonly Faker _faker;
-        private readonly IFixture _fixture;
         private readonly BuscarClientePorIdQueryHandler _queryHandler;
 
         #endregion
@@ -31,7 +24,6 @@ namespace GestaoDeCliente.TestsUnit.Application.Queries
             _clienteRepositorioMock = A.Fake<IClienteRepositorio>();
             _queryHandler = new BuscarClientePorIdQueryHandler(_clienteRepositorioMock);
             _faker = new Faker();
-            _fixture = new Fixture();
         }
         #endregion
 
