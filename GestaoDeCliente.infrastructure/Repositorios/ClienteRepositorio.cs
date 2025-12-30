@@ -1,56 +1,63 @@
 ﻿using GestaoDeCliente.Core.Entidades;
 using GestaoDeCliente.Core.Repositorios;
-using GestaoDeCliente.infrastructure.Contexto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using GestaoDeCliente.infrastructure.Excecoes;
+using NHibernate;
+using NHibernate.Linq;
 
 namespace GestaoDeCliente.infrastructure.Repositorios
 {
     public class ClienteRepositorio : IClienteRepositorio
     {
         #region Propriedades
-        private readonly GestaoDeClienteContexto _contexto;
+
+        private readonly ISession _sessaoBd;
+
         #endregion
 
         #region Construtor
-        public ClienteRepositorio(GestaoDeClienteContexto contexto)
+        public ClienteRepositorio(ISession sessaoBd)
         {
-            _contexto = contexto;
+            _sessaoBd = sessaoBd;
         }
         #endregion
 
         #region Servicos
-        public Task<Cliente?> BuscarClientePorId(int clientId)
+        public async Task<Cliente?> BuscarClientePorId(int clientId)
         {
-            Cliente? clienteRetornado = _contexto.Clientes.FirstOrDefault(cl => cl.ClienteId == clientId);
-            return Task.FromResult(clienteRetornado);
+            Cliente? clienteRetornado = await _sessaoBd.GetAsync<Cliente>(clientId);
+            return clienteRetornado;
         }
 
-        public Task<Cliente?> BuscarClientePorCnpj(string cnpj)
+        public async Task<Cliente?> BuscarClientePorCnpj(string cnpj)
         {
-            Cliente? clienteEncontrado = _contexto.Clientes.FirstOrDefault(cl => cl.Cnpj.Numero == cnpj);
-            return Task.FromResult(clienteEncontrado);
+
+            Cliente? clienteRetornado = await _sessaoBd.Query<Cliente>()
+                .Where(cl => cl.Cnpj.Numero == cnpj)
+                .FirstOrDefaultAsync();
+            return clienteRetornado;
+
         }
 
-        public Task<bool> CadastrarCliente(Cliente novoCliente)
+        public async Task<bool> CadastrarCliente(Cliente novoCliente)
         {
-            int proximoId = _contexto.Clientes.Any() 
-                ? _contexto.Clientes.Max(c => c.ClienteId) + 1 
-                : 1;
-            
-            DefinirClienteId(novoCliente, proximoId);
-            _contexto.Clientes.Add(novoCliente);
-            return Task.FromResult(true);
-        }
+            ITransaction transacao = null;
 
-        private static void DefinirClienteId(Cliente cliente, int clienteId)
-        {
-            var propriedade = typeof(Cliente).GetProperty("ClienteId", BindingFlags.Public | BindingFlags.Instance);
-            propriedade?.SetValue(cliente, clienteId);
+            try
+            {
+                transacao = _sessaoBd.BeginTransaction();
+                await _sessaoBd.SaveAsync(novoCliente);
+                await transacao.CommitAsync();
+                return true;
+            }
+            catch (Exception excecao)
+            {
+                await transacao?.RollbackAsync();
+                throw new RepositorioException("Ocorreu um erro durante o processamento de cadastro");
+            }
+            finally
+            {
+                transacao?.Dispose();
+            }
         }
         #endregion
     }
